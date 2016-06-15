@@ -3,7 +3,7 @@
 
 ################################################################################################################
 #                                                                                                              #
-# Vagrantfile for provisioning ready-to-go  ready-to-go HP Cloud Service Automation Community Edition 4.6.0 VM.#
+# Vagrantfile for provisioning ready-to-go HP Cloud Service Automation Community Edition 4.6.0 VM.#
 #                                                                                                              #
 # Author: Gilles Tosi                                                                                          #
 #                                                                                                              #
@@ -27,7 +27,7 @@ $csa = <<CSA
 echo "Build start at    :" > /tmp/build
 date >> /tmp/build 
 
-	########            Installing Docker            ###################
+	################     Installing Docker            ###################
 
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates
@@ -45,11 +45,13 @@ sudo service docker start
 sudo groupadd docker
 sudo usermod -aG docker vagrant
 
-	########            Installing Docker-Compose            ###################
+	################     Installing Docker-Compose            ###################
+
 sudo apt-get -y install python-pip
 sudo pip install docker-compose
 
-	########            Updating host and ufw                ###################
+	################     Updating host and ufw                ###################
+	
 sudo hostname 'csaserver.example.com'
 echo "127.0.1.1 192.168.99.10 csaserver" | sudo tee -a /etc/hosts
 sudo ufw enable
@@ -59,7 +61,7 @@ sudo ufw allow 22/tcp
 sudo ufw allow 2375/tcp
 sudo ufw allow 2376/tcp
 
-	########            docker-compose CSA            ###################
+	##################       docker-compose CSA               ###################
 
 mkdir /tmp/csa
 cd /tmp
