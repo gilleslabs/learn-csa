@@ -1,7 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+################################################################################################################
+#                                                                                                              #
+# Vagrantfile for provisioning ready-to-go  ready-to-go HP Cloud Service Automation Community Edition 4.6.0 VM.#
+#                                                                                                              #
+# Author: Gilles Tosi                                                                                          #
+#                                                                                                              #
+# The up-to-date version and associated dependencies/project documentation is available at:                    #
+#                                                                                                              #
+# https://github.com/gilleslabs/learn-csa/                                                                     #
+#                                                                                                              #
+################################################################################################################
+
+
+
+######################################################################################################
+#                                                                                                    #
+#      Setup of $csa variable which will be used for csa VM Shell inline provisioning     #
+#                                                                                                    #
+######################################################################################################
+
+
 
 $csa = <<CSA
 echo "Build start at    :" > /tmp/build
 date >> /tmp/build 
+
+	########            Installing Docker            ###################
+
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
@@ -17,9 +44,12 @@ sudo apt-get install docker-engine -y
 sudo service docker start
 sudo groupadd docker
 sudo usermod -aG docker vagrant
+
+	########            Installing Docker-Compose            ###################
 sudo apt-get -y install python-pip
 sudo pip install docker-compose
 
+	########            Updating host and ufw                ###################
 sudo hostname 'csaserver.example.com'
 echo "127.0.1.1 192.168.99.10 csaserver" | sudo tee -a /etc/hosts
 sudo ufw enable
@@ -29,6 +59,8 @@ sudo ufw allow 22/tcp
 sudo ufw allow 2375/tcp
 sudo ufw allow 2376/tcp
 
+	########            docker-compose CSA            ###################
+
 mkdir /tmp/csa
 cd /tmp
 curl -k -L https://github.com/HewlettPackard/csa-ce/raw/master/buildEnv-dockercompose.sh | bash /dev/stdin csaserver.example.com 192.168.99.10
@@ -37,7 +69,7 @@ date >> /tmp/build
 cat /tmp/build
 echo
 echo Starting CSA...
-wait 5m
+sleep 5m
 echo
 echo "Please note the below URLs for your reference"
 echo "CSA Management Console - https://192.168.99.10:18444/csa"

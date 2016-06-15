@@ -26,7 +26,7 @@ The VM is provisioned using ubuntu/trusty64 (Ubuntu 14.04 Trusty Tahr) from [atl
 
 VM | vCPU/vRAM | IP Address| user/password | root / Administrator password |
 ---|---|---|---|---|
-**csa** | 4vCPU/4096MB | 192.168.99.29 | vagrant/vagrant | vagrant |
+**csa** | 4vCPU/4096MB | 192.168.99.10 | vagrant/vagrant | vagrant |
 + **Recommended hardware :** Computer with Multi-core CPU and 8GB+ memory
 
 ## Installation
